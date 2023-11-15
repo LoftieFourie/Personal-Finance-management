@@ -1,0 +1,7 @@
+/* You can add global styles to this file, and also import other style files */
+body {
+  background-color: #575454; /* Set a gray background color */
+  color: white; /* Set text color to white */
+  margin: 0; /* Reset default margin */
+  font-family: Arial, sans-serif; /* Optional: Define a font family */
+}

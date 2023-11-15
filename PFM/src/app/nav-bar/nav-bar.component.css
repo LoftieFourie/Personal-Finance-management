@@ -1,0 +1,38 @@
+nav {
+  background-color: #b4ff28; /* Background color for the navigation bar */
+  color: black; /* Text color for the navigation items */
+  padding: 10px; /* Adjust padding as needed */
+  width: 100%; /* Make the navigation bar span the full width */
+  position: fixed; /* Fix the navigation bar at the top */
+  top: 0; /* Position it at the top of the viewport */
+  left: 0; /* Extend to the left side */
+  right: 0; /* Extend to the right side */
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex; /* Use flexbox */
+  justify-content: space-between; /* Spread items evenly across the container */
+}
+
+li {
+  display: inline-block;
+}
+
+li:last-child {
+  margin-left: auto;
+  margin-right: 20px;
+}
+
+a {
+  text-decoration: none; /* Remove underline from links */
+  color: inherit; /* Inherit text color */
+  padding: 10px 10px; /* Add padding to links */
+}
+
+a.active {
+  background-color: #81bf0c; /* Change this to your desired darker color */
+  /* Add any additional styles for the selected item */
+}

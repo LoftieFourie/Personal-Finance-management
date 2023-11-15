@@ -1,0 +1,63 @@
+.container {
+  display: flex;
+}
+
+.left-side,
+.right-side {
+  width: 50%;
+  padding: 20px;
+  box-sizing: border-box;
+  text-align: center; /* Center the content */
+}
+
+.left-side {
+  border-right: 1px solid #ccc;
+}
+
+.input-group {
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.headings {
+  display: flex;
+  border-bottom: 1px solid #ccc;
+  font-weight: bold;
+  padding: 8px 0;
+}
+
+.entry-title {
+  flex: 1;
+  text-align: center;
+}
+
+.costs-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.cost {
+  border-bottom: 1px solid #ccc;
+}
+
+.cost-entry {
+  display: flex;
+  margin-bottom: 8px;
+  align-items: center;
+}
+
+.entry-value {
+  flex: 1;
+  padding: 8px 0;
+  word-break: break-word;
+  text-align: center;
+}
+
+.total-amount {
+  margin-top: 20px;
+}
