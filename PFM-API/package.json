@@ -4,8 +4,8 @@
   "description": "api for the personal finance management application",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "test": "nodemon server.js",
+    "start": "node server.js"
   },
   "author": "Loftie Fourie",
   "license": "ISC",
