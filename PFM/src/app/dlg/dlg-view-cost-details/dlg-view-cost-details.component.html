@@ -1,0 +1,17 @@
+<h1 mat-dialog-title>Edit Cost</h1>
+<div mat-dialog-content>
+  <div class="cost-details">
+    <div class="entry-label">Amount:</div>
+    <div class="entry-value">R{{ cost.amount }}</div>
+    <div class="entry-label">Category:</div>
+    <div class="entry-value">{{ cost.category }}</div>
+    <div class="entry-label">Date:</div>
+    <div class="entry-value">{{ cost.date | date }}</div>
+    <div class="entry-label">Description:</div>
+    <div class="entry-value">{{ cost.description }}</div>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCloseClick()" cdkFocusInitial>Close</button>
+  <button mat-button (click)="onEditClick()">Edit</button>
+</div>

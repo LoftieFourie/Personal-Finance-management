@@ -29,10 +29,35 @@ li:last-child {
 a {
   text-decoration: none; /* Remove underline from links */
   color: inherit; /* Inherit text color */
-  padding: 10px 10px; /* Add padding to links */
+  padding: 11px 10px; /* Add padding to links */
 }
 
 a.active {
   background-color: #81bf0c; /* Change this to your desired darker color */
   /* Add any additional styles for the selected item */
+}
+
+button.userButton {
+  border-radius: 50%;
+  border-color: transparent;
+  padding: 2px;
+  margin-right: 10px;
+  background-color: #575454;
+  color: white;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+button.userButton:hover {
+  background-color: white;
+  color: #575454;
+}
+
+.not-logged-in {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: red; /* Change to your desired color */
+  color: white;
+  margin-left: 20px;
+  border-radius: 5px;
 }

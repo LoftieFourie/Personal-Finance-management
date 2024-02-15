@@ -1,0 +1,33 @@
+<h1 mat-dialog-title>Edit Cost</h1>
+<div mat-dialog-content>
+  <form [formGroup]="editCostForm">
+    <mat-form-field>
+      <input
+        matInput
+        formControlName="amount"
+        placeholder="Amount"
+        [(ngModel)]="cost.amount"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        formControlName="description"
+        placeholder="Description"
+        [(ngModel)]="cost.description"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        formControlName="category"
+        placeholder="category"
+        [(ngModel)]="cost.category"
+      />
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancelClick()">Cancel</button>
+  <button mat-button (click)="save()" cdkFocusInitial>Save</button>
+</div>

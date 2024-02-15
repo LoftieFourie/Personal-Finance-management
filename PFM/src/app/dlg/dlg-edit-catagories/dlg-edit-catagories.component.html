@@ -1,0 +1,29 @@
+<h1 mat-dialog-title>Categories</h1>
+<div mat-dialog-content class="dialog-content">
+  <div class="left-column">
+    <div class="input-group">
+      <input
+        type="text"
+        id="Category"
+        placeholder="Category"
+        [(ngModel)]="newCategory"
+      />
+      <button mat-raised-button color="primary" (click)="addCategory()">
+        Add
+      </button>
+    </div>
+  </div>
+  <div class="right-column">
+    <div class="categories-container">
+      <div class="category" *ngFor="let category of categories">
+        {{ category }}
+        <button mat-icon-button class="icon" (click)="removeCategory(category)">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+    </div>
+    <button mat-raised-button color="accent" (click)="onCloseClick()">
+      Done
+    </button>
+  </div>
+</div>

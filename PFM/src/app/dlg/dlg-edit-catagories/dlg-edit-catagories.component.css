@@ -1,0 +1,44 @@
+.dialog-content {
+  display: flex;
+}
+
+.left-column,
+.right-column {
+  flex: 1;
+  padding: 10px;
+}
+
+.input-group {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.right-column {
+  border-left: 1px solid #ccc;
+  padding-left: 20px;
+}
+
+.categories-container {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.category {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  border-bottom: 1px solid #ccc;
+}
+
+button {
+  margin-top: 10px;
+}
+
+button.icon {
+  margin-top: 10px;
+  background: transparent;
+  border: transparent;
+  color: white;
+}

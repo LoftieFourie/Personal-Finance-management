@@ -1,0 +1,14 @@
+.cost-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 10px;
+}
+
+.entry-label {
+  font-weight: bold;
+}
+
+.entry-value {
+  word-break: break-word;
+}

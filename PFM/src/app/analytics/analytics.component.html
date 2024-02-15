@@ -1,1 +1,77 @@
-<p>analytics works!</p>
+<div class="container">
+  <!-- Current Month's Cost -->
+  <div class="charts-container">
+    <h2>Current Month's Cost</h2>
+    <div class="chart-options">
+      <span>Chart Type: </span>
+      <select [(ngModel)]="selectedChartType" (change)="updateChartType()">
+        <option value="bar">Bar Chart</option>
+        <option value="pie">Pie Chart</option>
+        <option value="horizontalBar">Horizontal Bar Chart</option>
+      </select>
+    </div>
+
+    <!-- Display the selected chart based on the dropdown value -->
+    <ng-container *ngIf="selectedChartType === 'bar'">
+      <ngx-charts-bar-vertical
+        [view]="view"
+        [results]="chartData"
+        [scheme]="colorScheme"
+        [xAxis]="showXAxis"
+        [yAxis]="showYAxis"
+        [legend]="showLegend"
+        [showXAxisLabel]="showXAxisLabel"
+        [showYAxisLabel]="showYAxisLabel"
+        [xAxisLabel]="xAxisLabel"
+        [yAxisLabel]="yAxisLabel"
+        [animations]="animations"
+      ></ngx-charts-bar-vertical>
+    </ng-container>
+
+    <ng-container *ngIf="selectedChartType === 'pie'">
+      <ngx-charts-pie-chart
+        [view]="view"
+        [results]="chartData"
+        [scheme]="colorScheme"
+        [legend]="showLegend"
+        [animations]="animations"
+      ></ngx-charts-pie-chart>
+    </ng-container>
+
+    <ng-container *ngIf="selectedChartType === 'horizontalBar'">
+      <ngx-charts-bar-horizontal
+        [view]="view"
+        [results]="chartData"
+        [scheme]="colorScheme"
+        [xAxis]="showXAxis"
+        [yAxis]="showYAxis"
+        [legend]="showLegend"
+        [showXAxisLabel]="showXAxisLabel"
+        [showYAxisLabel]="showYAxisLabel"
+        [xAxisLabel]="xAxisLabel"
+        [yAxisLabel]="yAxisLabel"
+        [animations]="animations"
+      ></ngx-charts-bar-horizontal>
+    </ng-container>
+  </div>
+
+  <!-- Lifetime Data -->
+  <div class="line-chart-container">
+    <h2>Life time Data</h2>
+    <ngx-charts-line-chart
+      class="lineChart"
+      [view]="view"
+      [scheme]="colorScheme"
+      [results]="lineChartData"
+      [gradient]="gradient"
+      [xAxis]="!showXAxis"
+      [yAxis]="showYAxis"
+      [legend]="showLineLegend"
+      [showXAxisLabel]="!showXAxisLabel"
+      [showYAxisLabel]="showYAxisLabel"
+      [xAxisLabel]="xAxisLabel"
+      [yAxisLabel]="yAxisLabel"
+      [animations]="animations"
+    ></ngx-charts-line-chart>
+  </div>
+</div>

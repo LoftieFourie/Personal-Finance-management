@@ -1,0 +1,91 @@
+/* Add styling for the container */
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+/* Add styling for the charts container */
+.charts-container {
+  width: 48%; /* Adjust width as needed for the web view */
+  padding: 20px;
+  box-sizing: border-box;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Add styling for the line chart container */
+.line-chart-container {
+  width: 100%; /* Full width in mobile view */
+  padding: 20px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+/* Add styling for the heading */
+h2 {
+  margin-left: 5%;
+}
+
+/* Add styling for the chart options dropdown */
+.chart-options {
+  margin-top: 10px;
+  display: flex;
+  margin-left: 5%;
+}
+
+.chart-options span {
+  margin-right: 10px;
+}
+
+select {
+  padding: 2px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Add styling for the charts */
+ngx-charts-bar-vertical,
+ngx-charts-pie-chart,
+ngx-charts-bar-horizontal {
+  margin-top: 20px;
+  margin-left: 5%;
+}
+
+.lineChart {
+  padding: 5%;
+}
+
+/* Mobile responsiveness */
+@media screen and (max-width: 600px) {
+  .charts-container {
+    width: 100%; /* Full width for mobile view */
+  }
+
+  .line-chart-container {
+    margin-top: 20px; /* Adjust margin for separation in mobile view */
+  }
+
+  h2 {
+    margin-left: 2%;
+  }
+
+  .chart-options {
+    flex-direction: column;
+    margin-left: 2%;
+  }
+
+  select {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  ngx-charts-bar-vertical,
+  ngx-charts-pie-chart,
+  ngx-charts-bar-horizontal,
+  .lineChart {
+    margin-left: 2%;
+  }
+}

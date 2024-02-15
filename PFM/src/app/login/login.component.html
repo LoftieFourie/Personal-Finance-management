@@ -1,1 +1,30 @@
-<p>login works!</p>
+<div class="container">
+  <form (ngSubmit)="login()">
+    <h2>Login</h2>
+    <label for="username">Username:</label>
+    <input
+      type="text"
+      id="username"
+      name="username"
+      required
+      [(ngModel)]="loginForm.username"
+    />
+
+    <label for="password">Password:</label>
+    <input
+      type="password"
+      id="password"
+      name="password"
+      required
+      [(ngModel)]="loginForm.password"
+    />
+
+    <button type="submit">Login</button>
+  </form>
+
+  <div class="signup-option">
+    <p>
+      Don't have an account? <button (click)="goToSignup()">Sign Up</button>
+    </p>
+  </div>
+</div>
