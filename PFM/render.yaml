@@ -1,0 +1,7 @@
+services:
+  - name: pfm
+    envVars:
+      - key: NODE_ENV
+        value: production
+    buildCommand: yarn build
+    startCommand: yarn start
