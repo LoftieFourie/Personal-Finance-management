@@ -1,0 +1,5 @@
+services:
+  - type: web
+    name: pfm-api
+    buildCommand: yarn install --frozen-lockfile
+    startCommand: yarn start
