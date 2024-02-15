@@ -9,7 +9,11 @@ app.get("/", (req, res) => {
 
 app.use(
   cors({
-    origin: ["http://localhost:8100", "http://localhost:4200"],
+    origin: [
+      "http://localhost:8100",
+      "http://localhost:4200",
+      "https://pfmmainapp.onrender.com",
+    ],
   })
 );
 
