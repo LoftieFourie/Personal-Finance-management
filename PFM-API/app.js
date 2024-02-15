@@ -13,7 +13,7 @@ app.use(
       "http://localhost:8100",
       "http://localhost:4200",
       "https://pfmmainapp.onrender.com",
-      "https://personifi.netlify.app/home",
+      "https://personifi.netlify.app",
     ],
   })
 );
