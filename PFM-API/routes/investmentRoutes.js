@@ -1,21 +1,22 @@
 const express = require("express");
 const investmentControllers = require("./../controllers/investmentController.js");
+const { verifyToken } = require("./../middleWare/tokenVerification.js");
 
 const router = express.Router();
 
 router
   .route("/:id")
-  .get(investmentControllers.getAllInvestments)
-  .post(investmentControllers.createNewInvestment);
+  .get(verifyToken, investmentControllers.getAllInvestments)
+  .post(verifyToken, investmentControllers.createNewInvestment);
 
 router
   .route("/month/:id/:index")
-  .get(investmentControllers.getMonthInvestments);
+  .get(verifyToken, investmentControllers.getMonthInvestments);
 
 router
   .route("/:id/:investmentId")
-  .get(investmentControllers.getInvestment)
-  .delete(investmentControllers.deleteInvestment)
-  .patch(investmentControllers.updateInvestment);
+  .get(verifyToken, investmentControllers.getInvestment)
+  .delete(verifyToken, investmentControllers.deleteInvestment)
+  .patch(verifyToken, investmentControllers.updateInvestment);
 
 module.exports = router;

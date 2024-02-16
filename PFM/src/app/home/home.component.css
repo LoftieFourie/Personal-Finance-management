@@ -3,21 +3,31 @@
   flex-wrap: wrap;
 }
 
-.left-side,
 .right-side {
-  width: 50%;
+  width: 40%;
   padding: 20px;
+  margin: 2%;
   box-sizing: border-box;
   text-align: center; /* Center the content */
+  border-radius: 2%;
+  border: 2px solid #ccc;
+  background-color: rgba(0, 0, 0, 0.229);
 }
 
 .left-side {
-  border-right: 1px solid #ccc;
+  border-radius: 2%;
+  border: 2px solid #ccc;
+  width: 30%;
+  padding: 20px;
+  margin: 2%;
+  box-sizing: border-box;
+  text-align: center; /* Center the content */
+  background-color: rgba(0, 0, 0, 0.229);
 }
 
 .input-group {
   margin-bottom: 10px;
-  text-align: left;
+  text-align: center;
 }
 
 .input-group label {

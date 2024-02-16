@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../environments/environments';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-
+import { Observable, catchError } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
@@ -35,6 +34,11 @@ export class UserServicesService {
   }
 
   loginUser(credentials: any): Observable<any> {
-    return this.http.post<any>(`${this.baseRoute}/login`, credentials);
+    return this.http.post<any>(`${this.baseRoute}/login`, credentials).pipe(
+      // You can handle errors and show notifications here
+      catchError((error) => {
+        throw error;
+      })
+    );
   }
 }

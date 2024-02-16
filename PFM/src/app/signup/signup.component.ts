@@ -15,6 +15,8 @@ export class SignupComponent implements OnInit {
     email: '',
   };
 
+  loading = false;
+
   constructor(
     private router: Router,
     private userService: UserServicesService,
@@ -32,17 +34,22 @@ export class SignupComponent implements OnInit {
   }
 
   signup() {
-    // Call the registerUser function from your service
-    this.userService.createNewUser(this.signupForm).subscribe(
-      (response) => {
-        this.localStorageService.setUserCredentials(response);
-        this.router.navigate(['/home']);
-      },
-      (error) => {
-        console.error('Error registering user', error);
-        // Handle error appropriately (e.g., show error message to the user)
-      }
-    );
+    this.loading = true;
+    this.userService
+      .createNewUser(this.signupForm)
+      .subscribe(
+        (response) => {
+          this.localStorageService.setUserCredentials(response);
+          this.localStorageService.setToken(response.token);
+          this.router.navigate(['/home']);
+        },
+        (error) => {
+          console.error('Error registering user', error);
+        }
+      )
+      .add(() => {
+        this.loading = false;
+      });
   }
   goToLogin() {
     this.router.navigate(['/login']);

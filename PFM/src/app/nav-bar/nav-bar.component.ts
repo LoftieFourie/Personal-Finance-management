@@ -34,6 +34,7 @@ export class NavBarComponent {
 
   logout() {
     this.localStorageService.clearAllLocalStorage();
+    this.router.navigate(['/login']);
   }
 
   openCategories() {

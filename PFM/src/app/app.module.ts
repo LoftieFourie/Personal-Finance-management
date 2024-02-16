@@ -9,7 +9,7 @@ import { InvestmentsComponent } from './investments/investments.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { LoginComponent } from './login/login.component';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SignupComponent } from './signup/signup.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatMenuModule } from '@angular/material/menu';
@@ -20,6 +20,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { DlgViewCostDetailsComponent } from './dlg/dlg-view-cost-details/dlg-view-cost-details.component';
 import { DlgEditCatagoriesComponent } from './dlg/dlg-edit-catagories/dlg-edit-catagories.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { TokenInterceptor } from './environments/token.interceptor';
+import { NotificationComponent } from './notification/notification.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +35,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     DlgEditComponent,
     DlgViewCostDetailsComponent,
     DlgEditCatagoriesComponent,
+    NotificationComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,7 +50,13 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     ReactiveFormsModule,
     NgxChartsModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

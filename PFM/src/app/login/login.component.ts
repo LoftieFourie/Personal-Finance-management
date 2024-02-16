@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserServicesService } from '../services/user-services.service';
 import { LocalStorageService } from '../services/local-storage.service';
+import { NotificationService } from '../services/notification.service';
 
 @Component({
   selector: 'app-login',
@@ -14,10 +15,13 @@ export class LoginComponent implements OnInit {
     password: '',
   };
 
+  loading = false;
+
   constructor(
     private router: Router,
     private userService: UserServicesService,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    private notificationService: NotificationService
   ) {}
 
   ngOnInit() {
@@ -31,17 +35,25 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    // Call the loginUser function from your service
-    this.userService.loginUser(this.loginForm).subscribe(
-      (response) => {
-        this.localStorageService.setUserCredentials(response);
-        this.router.navigate(['/home']);
-      },
-      (error) => {
-        console.error('Error logging in user', error);
-        // Handle error appropriately (e.g., show error message to the user)
-      }
-    );
+    this.loading = true;
+    this.userService
+      .loginUser(this.loginForm)
+      .subscribe(
+        (response) => {
+          this.localStorageService.setUserCredentials(
+            response.userWithoutPassword
+          );
+          this.localStorageService.setToken(response.token);
+          this.router.navigate(['/home']);
+        },
+        (error) => {
+          console.error('Error logging in user', error);
+        }
+      )
+      .add(() => {
+        //this.notificationService.success('Login was succesful');
+        this.loading = false;
+      });
   }
 
   goToSignup() {

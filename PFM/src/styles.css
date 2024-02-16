@@ -6,5 +6,31 @@ body {
   font-family: Arial, sans-serif; /* Optional: Define a font family */
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.success-snackbar {
+  background-color: #4caf50; /* Green */
+  color: white;
+}
+
+.error-snackbar {
+  background-color: #f44336; /* Red */
+  color: white;
+}
+
+.warning-snackbar {
+  background-color: #ff9800; /* Orange */
+  color: white;
+}
+
+.info-snackbar {
+  background-color: #2196f3; /* Blue */
+  color: white;
+}

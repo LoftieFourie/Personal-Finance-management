@@ -31,6 +31,7 @@ interface UserCredentials {
     date: Date | null;
   }>;
   categories: (string | null)[];
+  token: string | null;
 }
 
 @Injectable({
@@ -120,5 +121,19 @@ export class LocalStorageService {
     }
 
     return null;
+  }
+
+  setToken(token: string): void {
+    const userCredentials = this.getUserCredentials();
+    if (userCredentials) {
+      userCredentials.token = token;
+      this.setUserCredentials(userCredentials);
+    }
+  }
+
+  // Get token from local storage
+  getToken(): string | null {
+    const userCredentials = this.getUserCredentials();
+    return userCredentials ? userCredentials.token : null;
   }
 }

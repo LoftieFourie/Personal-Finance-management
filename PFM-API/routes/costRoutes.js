@@ -1,19 +1,22 @@
 const express = require("express");
 const costControllers = require("./../controllers/costController.js");
+const { verifyToken } = require("./../middleWare/tokenVerification.js");
 
 const router = express.Router();
 
 router
   .route("/:id")
-  .get(costControllers.getAllCosts)
-  .post(costControllers.createNewCost);
+  .get(verifyToken, costControllers.getAllCosts)
+  .post(verifyToken, costControllers.createNewCost);
 
-router.route("/month/:id/:index").get(costControllers.getMonthCosts);
+router
+  .route("/month/:id/:index")
+  .get(verifyToken, costControllers.getMonthCosts);
 
 router
   .route("/:id/:costId")
-  .get(costControllers.getCost)
-  .delete(costControllers.deleteCost)
-  .patch(costControllers.updateCost);
+  .get(verifyToken, costControllers.getCost)
+  .delete(verifyToken, costControllers.deleteCost)
+  .patch(verifyToken, costControllers.updateCost);
 
 module.exports = router;

@@ -1,5 +1,6 @@
 const User = require("./../models/userModel");
 const bcrypt = require("bcrypt");
+const { generateToken } = require("./../middleWare/tokenVerification.js");
 
 exports.getAllUsers = async (req, res) => {
   try {
@@ -118,10 +119,12 @@ exports.registerUser = async (req, res) => {
 
     const savedUser = await newUser.save();
 
+    const token = generateToken(savedUser._id);
+
     // Avoid returning sensitive information like the password
     const { password: _, ...userWithoutPassword } = savedUser.toObject();
 
-    res.status(201).json(userWithoutPassword);
+    res.status(201).json({ token, userWithoutPassword });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error" });
@@ -149,7 +152,9 @@ exports.loginUser = async (req, res) => {
     // Avoid returning sensitive information like the password
     const { password: _, ...userWithoutPassword } = user.toObject();
 
-    res.status(200).json(userWithoutPassword);
+    const token = generateToken(user._id);
+
+    res.status(200).json({ token, userWithoutPassword });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error" });
