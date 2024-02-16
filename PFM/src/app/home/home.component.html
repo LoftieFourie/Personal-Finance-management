@@ -37,7 +37,10 @@
         cols="50"
       ></textarea>
     </div>
-    <button (click)="addCost()">Add Cost</button>
+    <button (click)="addCost()" [disabled]="loading">
+      <span *ngIf="!loading">Add Cost</span>
+      <span *ngIf="loading">Adding...</span>
+    </button>
   </div>
   <div class="right-side">
     <h2>This Months Costs</h2>
@@ -64,8 +67,18 @@
                 <mat-icon>more_vert</mat-icon>
               </button>
               <mat-menu #menu="matMenu">
-                <button mat-menu-item (click)="editCost(cost)">Edit</button>
-                <button mat-menu-item (click)="deleteCost(cost._id)">
+                <button
+                  mat-menu-item
+                  (click)="editCost(cost)"
+                  [disabled]="loading"
+                >
+                  Edit
+                </button>
+                <button
+                  mat-menu-item
+                  (click)="deleteCost(cost._id)"
+                  [disabled]="loading"
+                >
                   Delete
                 </button>
               </mat-menu>

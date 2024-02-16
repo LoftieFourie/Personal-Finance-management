@@ -35,6 +35,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
   isLoggedIn: boolean = false;
   categories: (string | null)[] = [];
   noCategories: boolean = false;
+  loading = false;
 
   constructor(
     private localStorage: LocalStorageService,
@@ -62,38 +63,50 @@ export class HomeComponent implements AfterViewInit, OnInit {
   }
 
   retrieveAndStoreOriginalMonthlyCosts() {
-    this.costService.getMonthCosts(this.id, 0).subscribe(
-      (response) => {
-        // Store the retrieved costs in local storage
-        this.localStorage.setMonthlyCosts(response);
-      },
-      (error) => {
-        // Handle error appropriately
-        console.error('Error retrieving monthly costs', error);
-      }
-    );
+    this.loading = true;
+    this.costService
+      .getMonthCosts(this.id, 0)
+      .subscribe(
+        (response) => {
+          // Store the retrieved costs in local storage
+          this.localStorage.setMonthlyCosts(response);
+        },
+        (error) => {
+          // Handle error appropriately
+          console.error('Error retrieving monthly costs', error);
+        }
+      )
+      .add(() => {
+        this.loading = false;
+      });
   }
 
   addCost() {
-    this.costService.createNewCost(this.id, this.newCost).subscribe(
-      (response) => {
-        // Clone the object to avoid pushing the reference
-        this.localStorage.addMonthlyCost({ ...response });
+    this.loading = true;
+    this.costService
+      .createNewCost(this.id, this.newCost)
+      .subscribe(
+        (response) => {
+          // Clone the object to avoid pushing the reference
+          this.localStorage.addMonthlyCost({ ...response });
 
-        // Clear the input fields after adding the cost
-        this.newCost = {
-          _id: null,
-          amount: null,
-          category: '',
-          description: '',
-        };
-        this.setFocusOnAmountInput();
-      },
-      (error) => {
-        // Handle error appropriately
-        console.error('Error creating new cost', error);
-      }
-    );
+          // Clear the input fields after adding the cost
+          this.newCost = {
+            _id: null,
+            amount: null,
+            category: '',
+            description: '',
+          };
+          this.setFocusOnAmountInput();
+        },
+        (error) => {
+          // Handle error appropriately
+          console.error('Error creating new cost', error);
+        }
+      )
+      .add(() => {
+        this.loading = false;
+      });
   }
 
   setFocusOnAmountInput() {
@@ -137,17 +150,23 @@ export class HomeComponent implements AfterViewInit, OnInit {
   }
 
   deleteCost(costId: any) {
+    this.loading = true;
     // Implement delete logic, e.g., remove the cost from the addedCosts array
-    this.costService.deleteCost(this.id, costId).subscribe(
-      (response) => {
-        // Remove the deleted cost from the addedCosts array in local storage
-        this.localStorage.removeMonthlyCost(costId);
-      },
-      (error) => {
-        // Handle error appropriately
-        console.error('Error deleting cost', error);
-      }
-    );
+    this.costService
+      .deleteCost(this.id, costId)
+      .subscribe(
+        (response) => {
+          // Remove the deleted cost from the addedCosts array in local storage
+          this.localStorage.removeMonthlyCost(costId);
+        },
+        (error) => {
+          // Handle error appropriately
+          console.error('Error deleting cost', error);
+        }
+      )
+      .add(() => {
+        this.loading = false;
+      });
   }
 
   viewDetails(event: MouseEvent, cost: Cost): void {
