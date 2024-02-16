@@ -12,7 +12,7 @@ app.use(
     origin: [
       "http://localhost:8100",
       "http://localhost:4200",
-      "https://personifi.onrender.com/",
+      "https://personifi.onrender.com",
       "https://personifi.netlify.app",
     ],
   })
