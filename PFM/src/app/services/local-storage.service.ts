@@ -32,6 +32,11 @@ interface UserCredentials {
   }>;
   categories: (string | null)[];
   token: string | null;
+  colorSchema: {
+    primaryColor: string | null;
+    secondaryColor: string | null;
+    accentColor: string | null;
+  };
 }
 
 @Injectable({
@@ -133,6 +138,33 @@ export class LocalStorageService {
 
     if (userCredentials) {
       userCredentials.fixedCosts = newFixedCosts;
+      this.setUserCredentials(userCredentials);
+      return userCredentials;
+    }
+
+    return null;
+  }
+
+  getColorSchema(): {
+    primaryColor: string | null;
+    secondaryColor: string | null;
+    accentColor: string | null;
+  } {
+    const userCredentials = this.getUserCredentials();
+    return userCredentials
+      ? userCredentials.colorSchema
+      : { primaryColor: null, secondaryColor: null, accentColor: null };
+  }
+
+  updateColorSchema(newColorSchema: {
+    primaryColor: string | null;
+    secondaryColor: string | null;
+    accentColor: string | null;
+  }): UserCredentials | null {
+    const userCredentials = this.getUserCredentials();
+
+    if (userCredentials) {
+      userCredentials.colorSchema = newColorSchema;
       this.setUserCredentials(userCredentials);
       return userCredentials;
     }

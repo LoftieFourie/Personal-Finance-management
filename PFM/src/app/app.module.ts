@@ -24,6 +24,7 @@ import { TokenInterceptor } from './environments/token.interceptor';
 import { NotificationComponent } from './notification/notification.component';
 import { DlgFixedCostsComponent } from './dlg/dlg-fixed-costs/dlg-fixed-costs.component';
 import { MatCardModule } from '@angular/material/card';
+import { DlgSchemaEditComponent } from './dlg/dlg-schema-edit/dlg-schema-edit.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { MatCardModule } from '@angular/material/card';
     DlgEditCatagoriesComponent,
     NotificationComponent,
     DlgFixedCostsComponent,
+    DlgSchemaEditComponent,
   ],
   imports: [
     BrowserModule,

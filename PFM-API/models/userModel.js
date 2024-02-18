@@ -1,5 +1,11 @@
 const mongoose = require("mongoose");
 
+const colorSchema = new mongoose.Schema({
+  primaryColor: { type: String },
+  secondaryColor: { type: String },
+  accentColor: { type: String },
+});
+
 const userSchema = new mongoose.Schema({
   username: { type: String, required: true },
   email: { type: String, required: true },
@@ -24,6 +30,7 @@ const userSchema = new mongoose.Schema({
     },
   ],
   categories: { type: [String] },
+  colorSchema: { type: colorSchema }, // Nested color schema object
 });
 
 const User = mongoose.model("User", userSchema);

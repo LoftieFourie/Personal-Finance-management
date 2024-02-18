@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { DlgEditCatagoriesComponent } from '../dlg/dlg-edit-catagories/dlg-edit-catagories.component';
 import { DlgFixedCostsComponent } from '../dlg/dlg-fixed-costs/dlg-fixed-costs.component';
+import { DlgSchemaEditComponent } from '../dlg/dlg-schema-edit/dlg-schema-edit.component';
 
 @Component({
   selector: 'app-nav-bar',
@@ -12,6 +13,11 @@ import { DlgFixedCostsComponent } from '../dlg/dlg-fixed-costs/dlg-fixed-costs.c
 })
 export class NavBarComponent {
   isLoggedIn: boolean = false;
+  initialColorSchema: any = {
+    primaryColor: '#575454',
+    secondaryColor: '#b4ff28',
+    accentColor: 'black',
+  };
 
   constructor(
     private localStorageService: LocalStorageService,
@@ -20,16 +26,26 @@ export class NavBarComponent {
   ) {
     // Subscribe to changes in user credentials to update login status
     this.localStorageService.userCredentials$.subscribe((credentials) => {
-      this.isLoggedIn = !!credentials; // Check if user credentials are present
+      if (credentials) {
+        this.initialColorSchema = credentials.colorSchema;
+        this.isLoggedIn = !!credentials; // Check if user credentials are present
+      } else {
+        this.initialColorSchema = {
+          primaryColor: '#575454',
+          secondaryColor: '#b4ff28',
+          accentColor: 'black',
+        };
+      }
     });
-  }
 
-  navigateTo(route: string) {
-    // Implement navigation logic based on the selected option
-    if (route === 'fixed-costs') {
-      this.router.navigate(['/fixed-costs']);
-    } else if (route === 'fixed-investments') {
-      this.router.navigate(['/fixed-investments']);
+    if (this.isLoggedIn) {
+      this.initialColorSchema = localStorageService.getColorSchema();
+    } else {
+      this.initialColorSchema = {
+        primaryColor: '#575454',
+        secondaryColor: '#b4ff28',
+        accentColor: 'black',
+      };
     }
   }
 
@@ -40,6 +56,10 @@ export class NavBarComponent {
 
   openCategories() {
     this.dlg.open(DlgEditCatagoriesComponent);
+  }
+
+  openColorSchema() {
+    this.dlg.open(DlgSchemaEditComponent);
   }
 
   openFixedCost() {

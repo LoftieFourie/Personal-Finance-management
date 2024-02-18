@@ -96,7 +96,6 @@ exports.DeleteUser = async (req, res) => {
 
 exports.registerUser = async (req, res) => {
   const { username, email, password } = req.body;
-  console.log(req.body);
   try {
     // Check if user with the same email already exists
     const existingUser = await User.findOne({ email });
@@ -107,14 +106,23 @@ exports.registerUser = async (req, res) => {
 
     // Hash the password before saving it
     const hashedPassword = await bcrypt.hash(password, 10);
+    const references = { costs: [], investments: [] };
+    const investmentTypes = [];
+    const fixedCosts = [];
+    const colorSchema = {
+      primaryColor: "#575454",
+      secondaryColor: "#b4ff28",
+      accentColor: "black",
+    };
 
     const newUser = new User({
       username,
       email,
       password: hashedPassword,
-      references: { costs: [], investments: [] },
-      investmentTypes: [],
-      fixedCosts: [],
+      references,
+      investmentTypes,
+      fixedCosts,
+      colorSchema,
     });
 
     const savedUser = await newUser.save();

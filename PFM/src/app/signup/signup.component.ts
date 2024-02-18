@@ -39,7 +39,9 @@ export class SignupComponent implements OnInit {
       .createNewUser(this.signupForm)
       .subscribe(
         (response) => {
-          this.localStorageService.setUserCredentials(response);
+          this.localStorageService.setUserCredentials(
+            response.userWithoutPassword
+          );
           this.localStorageService.setToken(response.token);
           this.router.navigate(['/home']);
         },

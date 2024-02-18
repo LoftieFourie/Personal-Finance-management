@@ -1,30 +1,38 @@
 <nav>
-  <ul>
-    <li><a routerLink="/home" routerLinkActive="active">Home</a></li>
-    <li><a routerLink="/analytics" routerLinkActive="active">Analytics</a></li>
-    <li>
-      <a routerLink="/investments" routerLinkActive="active">Investments</a>
-    </li>
-    <li *ngIf="!isLoggedIn">
-      <div class="not-logged-in">No user logged in</div>
-    </li>
-    <li *ngIf="!isLoggedIn">
-      <a routerLink="/login" routerLinkActive="active">Login</a>
-    </li>
-    <li *ngIf="isLoggedIn">
-      <button mat-icon-button class="userButton" [matMenuTriggerFor]="menu">
-        <mat-icon>person</mat-icon>
-      </button>
-      <mat-menu #menu="matMenu">
-        <button mat-menu-item (click)="openFixedCost()">Fixed Costs</button>
-        <button mat-menu-item (click)="navigateTo('fixed-investments')">
-          Fixed Investments
+  <div
+    class="nav-container"
+    [style.background]="initialColorSchema.secondaryColor"
+  >
+    <ul>
+      <li><a routerLink="/home" routerLinkActive="active">Home</a></li>
+      <li>
+        <a routerLink="/analytics" routerLinkActive="active">Analytics</a>
+      </li>
+      <li>
+        <a routerLink="/investments" routerLinkActive="active">Investments</a>
+      </li>
+      <li *ngIf="!isLoggedIn">
+        <div class="not-logged-in">No user logged in</div>
+      </li>
+      <li *ngIf="!isLoggedIn">
+        <a routerLink="/login" routerLinkActive="active">Login</a>
+      </li>
+      <li *ngIf="isLoggedIn">
+        <button mat-icon-button class="userButton" [matMenuTriggerFor]="menu">
+          <mat-icon>person</mat-icon>
         </button>
-        <button mat-menu-item (click)="openCategories()">
-          Cost Categories
-        </button>
-        <button mat-menu-item (click)="logout()">Logout</button>
-      </mat-menu>
-    </li>
-  </ul>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="openFixedCost()">Fixed Costs</button>
+          <button mat-menu-item>Fixed Investments</button>
+          <button mat-menu-item (click)="openCategories()">
+            Cost Categories
+          </button>
+          <button mat-menu-item (click)="openColorSchema()">
+            Color Schema
+          </button>
+          <button mat-menu-item (click)="logout()">Logout</button>
+        </mat-menu>
+      </li>
+    </ul>
+  </div>
 </nav>

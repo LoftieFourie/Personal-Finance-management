@@ -1,0 +1,47 @@
+<!-- dlg-schema-edit.component.html -->
+
+<div mat-dialog-content class="dialog-content">
+  <h1 mat-dialog-title>Schema Editor</h1>
+
+  <!-- Left side: Form inputs -->
+  <div class="form-container">
+    <form [formGroup]="schemaEditor">
+      <div>
+        <mat-label>Primary Color</mat-label>
+        <input matInput formControlName="primaryColor" type="color" />
+      </div>
+
+      <div>
+        <mat-label>Secondary Color</mat-label>
+        <input matInput formControlName="secondaryColor" type="color" />
+      </div>
+
+      <div>
+        <mat-label>Accent Color</mat-label>
+        <input matInput formControlName="accentColor" type="color" />
+      </div>
+    </form>
+  </div>
+
+  <!-- Right side: Color Preview -->
+  <div class="color-preview">
+    <h3>Color Preview</h3>
+    <div
+      class="preview-box"
+      [style.background]="schemaEditor.value.primaryColor"
+    >
+      <div
+        class="bar"
+        [style.background]="schemaEditor.value.secondaryColor"
+      ></div>
+      <div class="text-inside" [style.color]="schemaEditor.value.accentColor">
+        Text
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="button-group">
+  <button mat-raised-button color="primary" (click)="onSave()">Save</button>
+  <button mat-raised-button (click)="onCancel()">Cancel</button>
+</div>
