@@ -24,29 +24,20 @@ export class NavBarComponent {
     private router: Router,
     private dlg: MatDialog
   ) {
-    // Subscribe to changes in user credentials to update login status
     this.localStorageService.userCredentials$.subscribe((credentials) => {
       if (credentials) {
+        console.log(credentials);
         this.initialColorSchema = credentials.colorSchema;
-        this.isLoggedIn = !!credentials; // Check if user credentials are present
+        this.isLoggedIn = true; // Set to true when credentials are present
       } else {
         this.initialColorSchema = {
           primaryColor: '#575454',
           secondaryColor: '#b4ff28',
           accentColor: 'black',
         };
+        this.isLoggedIn = false; // Set to false when credentials are not present
       }
     });
-
-    if (this.isLoggedIn) {
-      this.initialColorSchema = localStorageService.getColorSchema();
-    } else {
-      this.initialColorSchema = {
-        primaryColor: '#575454',
-        secondaryColor: '#b4ff28',
-        accentColor: 'black',
-      };
-    }
   }
 
   logout() {
