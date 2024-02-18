@@ -1,0 +1,77 @@
+<h1 mat-dialog-title>Fixed Costs</h1>
+
+<div mat-dialog-content class="dialog-content">
+  <form [formGroup]="fixedCostForm">
+    <div class="left-column">
+      <div class="input-group">
+        <label>Amount</label>
+        <input
+          type="number"
+          id="Amount"
+          placeholder="Amount"
+          formControlName="amount"
+        />
+
+        <select id="category" formControlName="category">
+          <option *ngFor="let category of categories" [value]="category">
+            {{ category }}
+          </option>
+        </select>
+
+        <label>Description</label>
+        <input
+          type="text"
+          id="description"
+          placeholder="Description"
+          formControlName="description"
+        />
+
+        <label>Day of the month</label>
+        <input
+          type="number"
+          id="date"
+          placeholder="Date"
+          formControlName="date"
+          min="1"
+          max="30"
+        />
+
+        <button mat-raised-button color="primary" (click)="addFixedCost()">
+          Add
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <div class="right-column">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Fixed Costs List</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="categories-container">
+          <div class="category" *ngFor="let fixedCost of allFixedCosts">
+            <div class="category-details">
+              <div>
+                {{ fixedCost.amount | currency : "ZAR" : "symbol" : "1.2-2" }}
+              </div>
+              <div>{{ fixedCost.category }}</div>
+              <div>{{ fixedCost.description }}</div>
+              <div>{{ fixedCost.date }}th</div>
+            </div>
+            <button
+              mat-icon-button
+              class="icon"
+              (click)="removeFixedCost(fixedCost)"
+            >
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    <button mat-raised-button color="accent" (click)="onCloseClick()">
+      Done
+    </button>
+  </div>
+</div>

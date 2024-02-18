@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema({
       amount: { type: Number },
       category: { type: String },
       description: { type: String },
-      date: { type: Date },
+      date: { type: Number },
     },
   ],
   categories: { type: [String] },

@@ -15,6 +15,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
 
 interface Cost {
   _id: string | null;
@@ -37,7 +38,8 @@ export class DlgEditComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<DlgEditComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { cost: Cost },
-    private formBuilder: UntypedFormBuilder
+    private formBuilder: UntypedFormBuilder,
+    private localStorage: LocalStorageService
   ) {
     this.cost = data.cost;
     this.editCostForm = this.formBuilder.group({
@@ -48,8 +50,11 @@ export class DlgEditComponent implements OnInit {
       category: new UntypedFormControl({ value: data.cost.category }),
     });
   }
+  categories: (string | null)[] = [];
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.categories = this.localStorage.getCategories();
+  }
 
   save() {
     this.dialogRef.close({ action: 'save', data: this.cost });

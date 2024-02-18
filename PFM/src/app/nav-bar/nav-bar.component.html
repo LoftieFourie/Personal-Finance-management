@@ -16,9 +16,7 @@
         <mat-icon>person</mat-icon>
       </button>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item (click)="navigateTo('fixed-costs')">
-          Fixed Costs
-        </button>
+        <button mat-menu-item (click)="openFixedCost()">Fixed Costs</button>
         <button mat-menu-item (click)="navigateTo('fixed-investments')">
           Fixed Investments
         </button>

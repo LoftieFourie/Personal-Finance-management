@@ -88,7 +88,8 @@
       </div>
     </div>
     <div class="total-amount">
-      <strong>Total Amount:</strong> R{{ getTotalAmount() }}
+      <strong>Total Amount:</strong>
+      {{ getTotalAmount() | currency : "ZAR" : "symbol" : "1.2-2" }}
     </div>
   </div>
 </div>

@@ -35,6 +35,7 @@ export class AnalyticsComponent implements OnInit {
     group: ScaleType.Ordinal,
   };
   lineChartData: any[] = [];
+  isLoggedIn = false;
 
   gradient: boolean = true; // or any other appropriate value
   showXAxis: boolean = true;
@@ -50,24 +51,30 @@ export class AnalyticsComponent implements OnInit {
   constructor(
     private costService: CostServicesService,
     private localStorage: LocalStorageService
-  ) {}
+  ) {
+    this.localStorage.userCredentials$.subscribe((credentials) => {
+      this.isLoggedIn = !!credentials; // Check if user credentials are present
+    });
+  }
 
   ngOnInit(): void {
-    this.id = this.localStorage.getUserId();
     this.adjustViewDimensions();
+    if (this.isLoggedIn) {
+      this.id = this.localStorage.getUserId();
 
-    this.costService.getMonthCosts(this.id, 0).subscribe(
-      (response) => {
-        const currentMonthData = response;
-        this.chartData = this.processData(currentMonthData);
-        // Call longTermData method here, inside the subscription callback
-        this.updateLongTermData();
-      },
-      (error) => {
-        console.error('Update User Error:', error);
-        // Handle error as needed
-      }
-    );
+      this.costService.getMonthCosts(this.id, 0).subscribe(
+        (response) => {
+          const currentMonthData = response;
+          this.chartData = this.processData(currentMonthData);
+          // Call longTermData method here, inside the subscription callback
+          this.updateLongTermData();
+        },
+        (error) => {
+          console.error('Update User Error:', error);
+          // Handle error as needed
+        }
+      );
+    }
   }
 
   @HostListener('window:resize', ['$event'])

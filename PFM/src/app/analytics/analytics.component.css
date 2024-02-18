@@ -10,16 +10,16 @@
   width: 48%; /* Adjust width as needed for the web view */
   padding: 20px;
   box-sizing: border-box;
-  text-align: center;
+  text-align: left;
   margin-bottom: 20px;
 }
 
 /* Add styling for the line chart container */
 .line-chart-container {
-  width: 100%; /* Full width in mobile view */
+  width: 48%; /* Full width in mobile view */
   padding: 20px;
   box-sizing: border-box;
-  text-align: center;
+  text-align: left;
 }
 
 /* Add styling for the heading */

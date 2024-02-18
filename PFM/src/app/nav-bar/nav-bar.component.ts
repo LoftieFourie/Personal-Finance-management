@@ -3,6 +3,7 @@ import { LocalStorageService } from '../services/local-storage.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { DlgEditCatagoriesComponent } from '../dlg/dlg-edit-catagories/dlg-edit-catagories.component';
+import { DlgFixedCostsComponent } from '../dlg/dlg-fixed-costs/dlg-fixed-costs.component';
 
 @Component({
   selector: 'app-nav-bar',
@@ -39,5 +40,9 @@ export class NavBarComponent {
 
   openCategories() {
     this.dlg.open(DlgEditCatagoriesComponent);
+  }
+
+  openFixedCost() {
+    this.dlg.open(DlgFixedCostsComponent);
   }
 }

@@ -28,7 +28,7 @@ interface UserCredentials {
     amount: number | null;
     category: string | null;
     description: string | null;
-    date: Date | null;
+    date: number | null;
   }>;
   categories: (string | null)[];
   token: string | null;
@@ -116,6 +116,23 @@ export class LocalStorageService {
 
     if (userCredentials) {
       userCredentials.categories = newCategories;
+      this.setUserCredentials(userCredentials);
+      return userCredentials;
+    }
+
+    return null;
+  }
+
+  getFixedCosts(): (any | null)[] {
+    const userCredentials = this.getUserCredentials();
+    return userCredentials ? userCredentials.fixedCosts : [];
+  }
+
+  updateFixedCosts(newFixedCosts: (any | null)[]): UserCredentials | null {
+    const userCredentials = this.getUserCredentials();
+
+    if (userCredentials) {
+      userCredentials.fixedCosts = newFixedCosts;
       this.setUserCredentials(userCredentials);
       return userCredentials;
     }

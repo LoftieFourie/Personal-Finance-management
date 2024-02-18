@@ -1,0 +1,47 @@
+.dialog-content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.left-column,
+.right-column {
+  width: 45%;
+}
+
+.right-column {
+  text-align: right;
+}
+
+.categories-container {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.category {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+}
+
+.icon {
+  color: #e53935;
+}
+
+.category-details {
+  flex-grow: 1;
+  margin-right: 10px;
+}
+
+button {
+  margin-top: 10px;
+}
+
+button.icon {
+  margin-top: 10px;
+  background: transparent;
+  border: transparent;
+  color: white;
+}

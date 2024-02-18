@@ -55,9 +55,11 @@ export class HomeComponent implements AfterViewInit, OnInit {
   ngAfterViewInit() {}
 
   ngOnInit(): void {
-    this.id = this.localStorage.getUserId();
-    this.categories = this.localStorage.getCategories();
-    this.retrieveAndStoreOriginalMonthlyCosts();
+    if (this.isLoggedIn) {
+      this.id = this.localStorage.getUserId();
+      this.categories = this.localStorage.getCategories();
+      this.retrieveAndStoreOriginalMonthlyCosts();
+    }
 
     this.noCategories = this.categories.length === 0;
   }

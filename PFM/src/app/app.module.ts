@@ -22,6 +22,8 @@ import { DlgEditCatagoriesComponent } from './dlg/dlg-edit-catagories/dlg-edit-c
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { TokenInterceptor } from './environments/token.interceptor';
 import { NotificationComponent } from './notification/notification.component';
+import { DlgFixedCostsComponent } from './dlg/dlg-fixed-costs/dlg-fixed-costs.component';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,7 @@ import { NotificationComponent } from './notification/notification.component';
     DlgViewCostDetailsComponent,
     DlgEditCatagoriesComponent,
     NotificationComponent,
+    DlgFixedCostsComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,6 +52,7 @@ import { NotificationComponent } from './notification/notification.component';
     MatFormFieldModule,
     ReactiveFormsModule,
     NgxChartsModule,
+    MatCardModule,
   ],
   providers: [
     {

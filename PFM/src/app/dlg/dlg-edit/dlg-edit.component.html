@@ -7,6 +7,7 @@
         formControlName="amount"
         placeholder="Amount"
         [(ngModel)]="cost.amount"
+        type="number"
       />
     </mat-form-field>
     <mat-form-field>
@@ -18,12 +19,15 @@
       />
     </mat-form-field>
     <mat-form-field>
-      <input
-        matInput
-        formControlName="category"
-        placeholder="category"
+      <select
+        id="category"
         [(ngModel)]="cost.category"
-      />
+        formControlName="category"
+      >
+        <option *ngFor="let category of categories" [value]="category">
+          {{ category }}
+        </option>
+      </select>
     </mat-form-field>
   </form>
 </div>
