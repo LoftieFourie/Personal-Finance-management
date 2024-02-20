@@ -80,7 +80,7 @@ exports.checkAndAddFixedCosts = async (req, res) => {
 };
 
 cron.schedule(
-  "10 23 * * 2",
+  "0 1 * * 3",
   async () => {
     try {
       const users = await User.find();
