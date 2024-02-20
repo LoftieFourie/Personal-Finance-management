@@ -79,7 +79,7 @@ exports.checkAndAddFixedCosts = async (req, res) => {
   } catch (err) {}
 };
 
-cron.schedule("0 1 * * 1", async () => {
+cron.schedule("30 19 * * 3", async () => {
   try {
     // Get all existing users
     const users = await User.find();

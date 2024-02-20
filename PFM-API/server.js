@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 dotenv.config({ path: "./config.env" });
 const app = require("./app");
-// const Weekly = require("./middleWare/weeklyUploads");
+const cronScript = require("./middleWare/weeklyUploads");
 
 const DB = process.env.DATABASE.replace(
   "<PASSWORD>",
@@ -14,11 +14,12 @@ mongoose
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
-  .then(() => {
+  .then(async () => {
     console.log("DB connection established!");
 
     // Run the function once the database connection is established
     // Weekly.test();
+    await cronScript.runCronJob();
   })
   .catch((err) => console.error("DB connection failed:", err));
 
