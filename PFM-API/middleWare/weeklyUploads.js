@@ -79,21 +79,23 @@ exports.checkAndAddFixedCosts = async (req, res) => {
   } catch (err) {}
 };
 
-cron.schedule("30 19 * * 3", async () => {
-  try {
-    // Get all existing users
-    const users = await User.find();
+exports.scheduleCronJob = () => {
+  cron.schedule("45 19 * * 3", async () => {
+    try {
+      // Get all existing users
+      const users = await User.find();
 
-    // Loop through each user and run the checkAndAddFixedCosts function
-    for (const user of users) {
-      await exports.checkAndAddFixedCosts({ params: { id: user._id } }, null);
+      // Loop through each user and run the checkAndAddFixedCosts function
+      for (const user of users) {
+        await exports.checkAndAddFixedCosts({ params: { id: user._id } }, null);
+      }
+
+      console.log("Weekly task completed successfully.");
+    } catch (err) {
+      console.error("Weekly task failed:", err);
     }
-
-    console.log("Weekly task completed successfully.");
-  } catch (err) {
-    console.error("Weekly task failed:", err);
-  }
-});
+  });
+};
 
 // exports.test = async () => {
 //   try {

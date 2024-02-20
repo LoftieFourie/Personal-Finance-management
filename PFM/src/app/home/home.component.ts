@@ -11,6 +11,7 @@ import { MatMenuTrigger } from '@angular/material/menu';
 import { DlgEditComponent } from '../dlg/dlg-edit/dlg-edit.component';
 import { MatDialog } from '@angular/material/dialog';
 import { DlgViewCostDetailsComponent } from '../dlg/dlg-view-cost-details/dlg-view-cost-details.component';
+import { Router } from '@angular/router';
 
 interface Cost {
   _id: string | null;
@@ -40,7 +41,8 @@ export class HomeComponent implements AfterViewInit, OnInit {
   constructor(
     private localStorage: LocalStorageService,
     private costService: CostServicesService,
-    private dlg: MatDialog
+    private dlg: MatDialog,
+    private router: Router
   ) {
     this.localStorage.userCredentials$.subscribe((credentials) => {
       this.isLoggedIn = !!credentials; // Check if user credentials are present
@@ -74,7 +76,8 @@ export class HomeComponent implements AfterViewInit, OnInit {
           this.localStorage.setMonthlyCosts(response);
         },
         (error) => {
-          // Handle error appropriately
+          this.localStorage.clearAllLocalStorage();
+          this.router.navigate(['/login']);
           console.error('Error retrieving monthly costs', error);
         }
       )

@@ -58,6 +58,7 @@ export class DlgFixedCostsComponent implements OnInit {
     console.log('asbdasfnjabsfj');
     console.log(this.fixedCostForm.value);
     this.allFixedCosts.push(this.fixedCostForm.value);
+    this.fixedCostForm.reset();
   }
 
   removeFixedCost(fixedCost: fixedCost): void {

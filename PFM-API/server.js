@@ -19,7 +19,7 @@ mongoose
 
     // Run the function once the database connection is established
     // Weekly.test();
-    await cronScript.runCronJob();
+    await cronScript.scheduleCronJob();
   })
   .catch((err) => console.error("DB connection failed:", err));
 
