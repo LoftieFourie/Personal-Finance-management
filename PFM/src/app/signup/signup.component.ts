@@ -29,7 +29,7 @@ export class SignupComponent implements OnInit {
 
     if (userCredentials) {
       // User is already logged in, navigate to home page
-      this.router.navigate(['/home']);
+      this.router.navigate(['/home'], { skipLocationChange: true });
     }
   }
 
@@ -43,7 +43,7 @@ export class SignupComponent implements OnInit {
             response.userWithoutPassword
           );
           this.localStorageService.setToken(response.token);
-          this.router.navigate(['/home']);
+          this.router.navigate(['/home'], { skipLocationChange: true });
         },
         (error) => {
           console.error('Error registering user', error);
@@ -54,6 +54,6 @@ export class SignupComponent implements OnInit {
       });
   }
   goToLogin() {
-    this.router.navigate(['/login']);
+    this.router.navigate(['/login'], { skipLocationChange: true });
   }
 }

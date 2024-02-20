@@ -4,18 +4,34 @@
     [style.background]="initialColorSchema.secondaryColor"
   >
     <ul>
-      <li><a routerLink="/home" routerLinkActive="active">Home</a></li>
       <li>
-        <a routerLink="/analytics" routerLinkActive="active">Analytics</a>
+        <a (click)="goHome()" routerLink="/home" routerLinkActive="active"
+          >Home</a
+        >
       </li>
       <li>
-        <a routerLink="/investments" routerLinkActive="active">Investments</a>
+        <a
+          (click)="goAnalytics()"
+          routerLink="/analytics"
+          routerLinkActive="active"
+          >Analytics</a
+        >
+      </li>
+      <li>
+        <a
+          (click)="goInvestments()"
+          routerLink="/investments"
+          routerLinkActive="active"
+          >Investments</a
+        >
       </li>
       <li *ngIf="!isLoggedIn">
         <div class="not-logged-in">No user logged in</div>
       </li>
       <li *ngIf="!isLoggedIn">
-        <a routerLink="/login" routerLinkActive="active">Login</a>
+        <a (click)="goLogin()" routerLink="/login" routerLinkActive="active"
+          >Login</a
+        >
       </li>
       <li *ngIf="isLoggedIn">
         <button mat-icon-button class="userButton" [matMenuTriggerFor]="menu">

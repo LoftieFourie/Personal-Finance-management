@@ -3,6 +3,7 @@ const dotenv = require("dotenv");
 dotenv.config({ path: "./config.env" });
 const app = require("./app");
 const cronScript = require("./middleWare/weeklyUploads");
+const cron = require("node-cron");
 
 const DB = process.env.DATABASE.replace(
   "<PASSWORD>",
@@ -14,12 +15,8 @@ mongoose
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
-  .then(async () => {
+  .then(() => {
     console.log("DB connection established!");
-
-    // Run the function once the database connection is established
-    // Weekly.test();
-    await cronScript.scheduleCronJob();
   })
   .catch((err) => console.error("DB connection failed:", err));
 

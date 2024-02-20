@@ -77,7 +77,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
         },
         (error) => {
           this.localStorage.clearAllLocalStorage();
-          this.router.navigate(['/login']);
+          this.router.navigate(['/login'], { skipLocationChange: true });
           console.error('Error retrieving monthly costs', error);
         }
       )

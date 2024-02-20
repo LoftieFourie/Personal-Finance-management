@@ -44,6 +44,6 @@ export class TokenInterceptor implements HttpInterceptor {
 
   private handleUnauthorizedAccess(): void {
     this.localStorageService.clearAllLocalStorage();
-    this.router.navigate(['/login']);
+    this.router.navigate(['/login'], { skipLocationChange: true });
   }
 }

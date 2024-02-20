@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { LocalStorageService } from '../services/local-storage.service';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { DlgEditCatagoriesComponent } from '../dlg/dlg-edit-catagories/dlg-edit-catagories.component';
 import { DlgFixedCostsComponent } from '../dlg/dlg-fixed-costs/dlg-fixed-costs.component';
 import { DlgSchemaEditComponent } from '../dlg/dlg-schema-edit/dlg-schema-edit.component';
+import { Location } from '@angular/common';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-nav-bar',
@@ -22,7 +24,8 @@ export class NavBarComponent {
   constructor(
     private localStorageService: LocalStorageService,
     private router: Router,
-    private dlg: MatDialog
+    private dlg: MatDialog,
+    private location: Location
   ) {
     this.localStorageService.userCredentials$.subscribe((credentials) => {
       if (credentials) {
@@ -42,7 +45,7 @@ export class NavBarComponent {
 
   logout() {
     this.localStorageService.clearAllLocalStorage();
-    this.router.navigate(['/login']);
+    this.router.navigate(['/login'], { skipLocationChange: true });
   }
 
   openCategories() {
@@ -55,5 +58,21 @@ export class NavBarComponent {
 
   openFixedCost() {
     this.dlg.open(DlgFixedCostsComponent);
+  }
+
+  goAnalytics() {
+    this.router.navigate(['/analytics'], { skipLocationChange: true });
+  }
+
+  goHome() {
+    this.router.navigate(['/home'], { skipLocationChange: true });
+  }
+
+  goInvestments() {
+    this.router.navigate(['/investments'], { skipLocationChange: true });
+  }
+
+  goLogin() {
+    this.router.navigate(['/login'], { skipLocationChange: true });
   }
 }

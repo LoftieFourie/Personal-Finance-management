@@ -12,7 +12,7 @@ const routes: Routes = [
   { path: 'investments', component: InvestmentsComponent },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
-  { path: '', redirectTo: '/home', pathMatch: 'full' }, // Default route
+  { path: '', component: HomeComponent, pathMatch: 'full' }, // Default route
 ];
 
 @NgModule({
