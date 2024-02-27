@@ -13,6 +13,7 @@ interface fixedCost {
   category?: string | null;
   date?: number | null;
   description?: string | null;
+  added?: boolean | null;
 }
 
 @Component({
@@ -26,6 +27,7 @@ export class DlgFixedCostsComponent implements OnInit {
     category: '',
     description: '',
     date: null,
+    added: false,
   };
 
   fixedCostForm: FormGroup;
@@ -57,7 +59,12 @@ export class DlgFixedCostsComponent implements OnInit {
   addFixedCost(): void {
     console.log('asbdasfnjabsfj');
     console.log(this.fixedCostForm.value);
-    this.allFixedCosts.push(this.fixedCostForm.value);
+    const newFixedCost: fixedCost = {
+      ...this.fixedCostForm.value,
+      added: false,
+    };
+
+    this.allFixedCosts.push(newFixedCost);
     this.fixedCostForm.reset();
   }
 

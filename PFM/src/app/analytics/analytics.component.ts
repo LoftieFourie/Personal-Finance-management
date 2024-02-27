@@ -141,17 +141,18 @@ export class AnalyticsComponent implements OnInit {
     return this.costService.getMonthCosts(this.id, this.monthCount).pipe(
       concatMap((data) => {
         if (data.length > 0) {
-          this.monthCount++;
           const processedData = this.processLongTermData(
             data,
             dataMonth,
-            dataYear
+            dataYear,
+            currentDate
           );
           this.LongchartData.push(processedData);
         } else {
           this.lastMonth = true;
         }
-        if (!this.lastMonth) {
+        if (!this.lastMonth && this.monthCount < currentMonth) {
+          this.monthCount++;
           // Recursively call longTermData and flatten the result using of
           return of(this.longTermData()).pipe(concatAll());
         } else {
@@ -166,7 +167,12 @@ export class AnalyticsComponent implements OnInit {
     );
   }
 
-  processLongTermData(data: any[], month: number, year: number): any {
+  processLongTermData(
+    data: any[],
+    month: number,
+    year: number,
+    currentDate: Date
+  ): any {
     const monthNames = [
       'January',
       'February',
@@ -187,25 +193,35 @@ export class AnalyticsComponent implements OnInit {
     const yearMonth = `${year}-${formattedMonth}`;
 
     const series: { value: number; name: string }[] = [];
+    let accumulatedValue = 0;
+
+    // Use the current day as the end point of the loop
+    const currentDay = currentDate.getDate();
 
     for (let i = 1; i <= 31; i++) {
+      if (i > currentDay) {
+        // If the loop day is greater than the current day, stop the loop
+        break;
+      }
+
       const formattedDay = i.toString().padStart(2, '0');
-      const currentDate = `${yearMonth}-${formattedDay}`;
+      const currentEntryDate = `${yearMonth}-${formattedDay}`;
 
       // Filter entries with the same date
       const matchingEntries = data.filter((entry) => {
         // Convert the database date to the desired format for comparison
         const entryDate = new Date(entry.date).toLocaleDateString('en-CA');
-        return entryDate === currentDate;
+        return entryDate === currentEntryDate;
       });
 
       // Sum up the amounts for all matching entries
-      const value = matchingEntries.reduce(
+      const dailyValue = matchingEntries.reduce(
         (sum, entry) => sum + entry.amount,
         0
       );
+      accumulatedValue += dailyValue;
 
-      series.push({ value, name: currentDate });
+      series.push({ value: accumulatedValue, name: currentEntryDate });
     }
 
     return { name: monthName, series };

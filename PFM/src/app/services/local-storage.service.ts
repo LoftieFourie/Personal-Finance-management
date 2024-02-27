@@ -23,12 +23,14 @@ interface UserCredentials {
     amount: number | null;
     category: string | null;
     description: string | null;
+    added: boolean | null;
   }>;
   fixedCosts: Array<{
     amount: number | null;
     category: string | null;
     description: string | null;
     date: number | null;
+    added: boolean | null;
   }>;
   categories: (string | null)[];
   token: string | null;

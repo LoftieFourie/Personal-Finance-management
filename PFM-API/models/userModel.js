@@ -19,6 +19,7 @@ const userSchema = new mongoose.Schema({
       amount: { type: Number },
       category: { type: String },
       description: { type: String },
+      added: { type: Boolean },
     },
   ],
   fixedCosts: [
@@ -27,6 +28,7 @@ const userSchema = new mongoose.Schema({
       category: { type: String },
       description: { type: String },
       date: { type: Number },
+      added: { type: Boolean },
     },
   ],
   categories: { type: [String] },

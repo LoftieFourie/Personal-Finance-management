@@ -1,6 +1,9 @@
 const User = require("./../models/userModel");
 const bcrypt = require("bcrypt");
 const { generateToken } = require("./../middleWare/tokenVerification.js");
+const {
+  checkAndAddFixedCostsMiddleware,
+} = require("./../middleWare/weeklyUploads.js");
 
 exports.getAllUsers = async (req, res) => {
   try {
@@ -161,6 +164,8 @@ exports.loginUser = async (req, res) => {
     const { password: _, ...userWithoutPassword } = user.toObject();
 
     const token = generateToken(user._id);
+    req.userId = user._id;
+    await checkAndAddFixedCostsMiddleware(req);
 
     res.status(200).json({ token, userWithoutPassword });
   } catch (error) {
