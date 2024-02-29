@@ -72,7 +72,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
       .getMonthCosts(this.id, 0)
       .subscribe(
         (response) => {
-          // Store the retrieved costs in local storage
+          console.log(response);
           this.localStorage.setMonthlyCosts(response);
         },
         (error) => {

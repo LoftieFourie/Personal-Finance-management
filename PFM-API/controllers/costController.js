@@ -42,11 +42,14 @@ exports.createNewCost = async (req, res) => {
       category,
     });
 
-    const savedCost = await newCost.save();
-
     // Add the reference to the new cost in the user's references.costs array
-    user.references.costs.push(savedCost._id);
+    user.references.costs.push(newCost._id);
+
+    // Save the user first to ensure the reference is added
     await user.save();
+
+    // Save the new cost document
+    const savedCost = await newCost.save();
 
     res.status(201).json(savedCost);
   } catch (error) {
