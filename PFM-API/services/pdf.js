@@ -1,7 +1,6 @@
 const pdf = require("html-pdf");
 const path = require("path");
 const fs = require("fs");
-const Cost = require("../models/costModel");
 const User = require("../models/userModel");
 const moment = require("moment");
 
