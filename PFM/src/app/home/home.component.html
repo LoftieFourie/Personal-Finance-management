@@ -43,46 +43,49 @@
     </button>
   </div>
   <div class="right-side">
-    <h2>This Months Costs</h2>
+    <h2>Costs</h2>
+    <mat-icon (click)="selectDate()">date_range</mat-icon>
     <div class="costs-container">
       <div class="headings">
         <div class="entry-title">Category</div>
         <div class="entry-title">Description</div>
         <div class="entry-title">Amount</div>
-        <div class="entry-title">Actions</div>
+        <div class="entry-title">Date</div>
       </div>
       <div class="costs-list">
         <div class="cost" *ngFor="let cost of addedCosts">
-          <div class="cost-entry" (click)="viewDetails($event, cost)">
+          <div
+            class="cost-entry"
+            [matMenuTriggerFor]="menu"
+            (click)="$event.stopPropagation()"
+          >
             <div class="entry-value">{{ cost.category }}</div>
             <div class="entry-value description">{{ cost.description }}</div>
             <div class="entry-value">R{{ cost.amount }}</div>
-            <div class="entry-value">
+            <div class="entry-value">{{ formatDate(cost.date) }}</div>
+            <mat-menu #menu="matMenu">
               <button
-                class="actions"
-                mat-icon-button
-                [matMenuTriggerFor]="menu"
-                (click)="$event.stopPropagation()"
+                mat-menu-item
+                (click)="viewDetails($event, cost)"
+                [disabled]="loading"
               >
-                <mat-icon>more_vert</mat-icon>
+                View
               </button>
-              <mat-menu #menu="matMenu">
-                <button
-                  mat-menu-item
-                  (click)="editCost(cost)"
-                  [disabled]="loading"
-                >
-                  Edit
-                </button>
-                <button
-                  mat-menu-item
-                  (click)="deleteCost(cost._id)"
-                  [disabled]="loading"
-                >
-                  Delete
-                </button>
-              </mat-menu>
-            </div>
+              <button
+                mat-menu-item
+                (click)="editCost(cost)"
+                [disabled]="loading"
+              >
+                Edit
+              </button>
+              <button
+                mat-menu-item
+                (click)="deleteCost(cost._id)"
+                [disabled]="loading"
+              >
+                Delete
+              </button>
+            </mat-menu>
           </div>
         </div>
       </div>

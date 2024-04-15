@@ -12,6 +12,7 @@ import { DlgEditComponent } from '../dlg/dlg-edit/dlg-edit.component';
 import { MatDialog } from '@angular/material/dialog';
 import { DlgViewCostDetailsComponent } from '../dlg/dlg-view-cost-details/dlg-view-cost-details.component';
 import { Router } from '@angular/router';
+import { DlgDateSelectComponent } from '../dlg/dlg-date-select/dlg-date-select.component';
 
 interface Cost {
   _id: string | null;
@@ -37,6 +38,8 @@ export class HomeComponent implements AfterViewInit, OnInit {
   categories: (string | null)[] = [];
   noCategories: boolean = false;
   loading = false;
+  startDate: Date;
+  endDate: Date;
 
   constructor(
     private localStorage: LocalStorageService,
@@ -44,6 +47,14 @@ export class HomeComponent implements AfterViewInit, OnInit {
     private dlg: MatDialog,
     private router: Router
   ) {
+    const currentDate = new Date();
+    this.endDate = currentDate;
+    this.startDate = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth() - 1,
+      currentDate.getDate()
+    );
+
     this.localStorage.userCredentials$.subscribe((credentials) => {
       this.isLoggedIn = !!credentials; // Check if user credentials are present
     });
@@ -66,10 +77,24 @@ export class HomeComponent implements AfterViewInit, OnInit {
     this.noCategories = this.categories.length === 0;
   }
 
+  formatDate(date: any): string {
+    if (!date) {
+      return ''; // Handle null or undefined dates
+    }
+    const formattedDate = new Date(date);
+    const options: Intl.DateTimeFormatOptions = {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+    };
+    return formattedDate.toLocaleDateString('en-US', options);
+  }
+
   retrieveAndStoreOriginalMonthlyCosts() {
     this.loading = true;
+    const req = { startDate: this.startDate, endDate: this.endDate };
     this.costService
-      .getMonthCosts(this.id, 0)
+      .getCostByRange(this.id, req)
       .subscribe(
         (response) => {
           console.log(response);
@@ -112,6 +137,28 @@ export class HomeComponent implements AfterViewInit, OnInit {
       .add(() => {
         this.loading = false;
       });
+  }
+
+  selectDate() {
+    let dialogRef = this.dlg.open(DlgDateSelectComponent, {
+      data: { startDate: this.startDate, endDate: this.endDate },
+    });
+
+    dialogRef.afterClosed().subscribe(async (result) => {
+      console.log(result);
+      this.costService.getCostByRange(this.id, result.data).subscribe(
+        (response) => {
+          console.log(response);
+          this.startDate = result.data.startDate;
+          this.endDate = result.data.endDate;
+          this.localStorage.setMonthlyCosts(response);
+        },
+        (error) => {
+          // Handle error appropriately
+          console.error('Error creating new cost', error);
+        }
+      );
+    });
   }
 
   setFocusOnAmountInput() {

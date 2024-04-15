@@ -31,8 +31,6 @@ exports.createNewCost = async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-
-    // Assuming request body contains necessary information for the new cost
     const { description, amount, category } = req.body;
 
     const newCost = new Cost({
@@ -80,6 +78,31 @@ exports.getMonthCosts = async (req, res) => {
     });
 
     res.status(200).json(costsForMonth);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+exports.getCostByRange = async (req, res) => {
+  const userId = req.params.id;
+  const startDate = req.body.startDate;
+  const endDate = req.body.endDate;
+
+  console.log(startDate);
+
+  try {
+    const user = await User.findById(userId).populate("references.costs");
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const costsInRange = user.references.costs.filter((cost) => {
+      return moment(cost.date).isBetween(startDate, endDate, null, "[]");
+    });
+
+    res.status(200).json(costsInRange);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error" });

@@ -56,6 +56,10 @@ export class DlgEditComponent implements OnInit {
     this.categories = this.localStorage.getCategories();
   }
 
+  ngOnDestroy(): void {
+    this.onCancelClick();
+  }
+
   save() {
     this.dialogRef.close({ action: 'save', data: this.cost });
   }

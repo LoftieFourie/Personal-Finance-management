@@ -16,6 +16,9 @@ import { MatMenuModule } from '@angular/material/menu';
 import { DlgEditComponent } from './dlg/dlg-edit/dlg-edit.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DlgViewCostDetailsComponent } from './dlg/dlg-view-cost-details/dlg-view-cost-details.component';
 import { DlgEditCatagoriesComponent } from './dlg/dlg-edit-catagories/dlg-edit-catagories.component';
@@ -25,6 +28,8 @@ import { NotificationComponent } from './notification/notification.component';
 import { DlgFixedCostsComponent } from './dlg/dlg-fixed-costs/dlg-fixed-costs.component';
 import { MatCardModule } from '@angular/material/card';
 import { DlgSchemaEditComponent } from './dlg/dlg-schema-edit/dlg-schema-edit.component';
+import { DlgDateSelectComponent } from './dlg/dlg-date-select/dlg-date-select.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -41,6 +46,7 @@ import { DlgSchemaEditComponent } from './dlg/dlg-schema-edit/dlg-schema-edit.co
     NotificationComponent,
     DlgFixedCostsComponent,
     DlgSchemaEditComponent,
+    DlgDateSelectComponent,
   ],
   imports: [
     BrowserModule,
@@ -55,6 +61,10 @@ import { DlgSchemaEditComponent } from './dlg/dlg-schema-edit/dlg-schema-edit.co
     ReactiveFormsModule,
     NgxChartsModule,
     MatCardModule,
+    MatDatepickerModule,
+    MatInputModule,
+    MatNativeDateModule,
+    MatProgressSpinnerModule,
   ],
   providers: [
     {

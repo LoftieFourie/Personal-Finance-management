@@ -7,6 +7,8 @@ import { DlgFixedCostsComponent } from '../dlg/dlg-fixed-costs/dlg-fixed-costs.c
 import { DlgSchemaEditComponent } from '../dlg/dlg-schema-edit/dlg-schema-edit.component';
 import { Location } from '@angular/common';
 import { filter } from 'rxjs';
+import { UserServicesService } from '../services/user-services.service';
+import { DlgDateSelectComponent } from '../dlg/dlg-date-select/dlg-date-select.component';
 
 @Component({
   selector: 'app-nav-bar',
@@ -20,16 +22,19 @@ export class NavBarComponent {
     secondaryColor: '#b4ff28',
     accentColor: 'black',
   };
+  userId: any;
 
   constructor(
     private localStorageService: LocalStorageService,
     private router: Router,
     private dlg: MatDialog,
-    private location: Location
+    private location: Location,
+    private userService: UserServicesService
   ) {
     this.localStorageService.userCredentials$.subscribe((credentials) => {
       if (credentials) {
         console.log(credentials);
+        this.userId = credentials._id;
         this.initialColorSchema = credentials.colorSchema;
         this.isLoggedIn = true; // Set to true when credentials are present
       } else {
@@ -74,5 +79,27 @@ export class NavBarComponent {
 
   goLogin() {
     this.router.navigate(['/login'], { skipLocationChange: true });
+  }
+
+  async getPdf() {
+    let dialogRef = this.dlg.open(DlgDateSelectComponent, {
+      data: {},
+    });
+
+    dialogRef.afterClosed().subscribe(async (result) => {
+      if (result.action == 'save') {
+        this.userService.getPdf(this.userId, result.data).subscribe(
+          (response) => {
+            const blob = new Blob([response], { type: 'application/pdf' });
+            const url = window.URL.createObjectURL(blob);
+            window.open(url); // Open the PDF in a new tab
+          },
+          (error) => {
+            // Handle error
+            console.error('Error getting PDF:', error);
+          }
+        );
+      }
+    });
   }
 }

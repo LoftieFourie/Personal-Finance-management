@@ -2,6 +2,10 @@
   <!-- Current Month's Cost -->
   <div class="charts-container">
     <h2>Current Month's Cost</h2>
+    <div *ngIf="isLoading" class="loading-spinner">
+      <mat-spinner diameter="30"></mat-spinner>
+      <span>Loading...</span>
+    </div>
     <div class="chart-options">
       <span>Chart Type: </span>
       <select [(ngModel)]="selectedChartType" (change)="updateChartType()">
@@ -10,9 +14,42 @@
         <option value="horizontalBar">Horizontal Bar Chart</option>
       </select>
     </div>
+    <div class="date-selector">
+      <mat-form-field>
+        <mat-label>Start Date</mat-label>
+        <input
+          matInput
+          [matDatepicker]="startDatePicker"
+          [max]="endDate"
+          [(ngModel)]="startDate"
+          (dateChange)="dateChange()"
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="startDatePicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #startDatePicker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>End Date</mat-label>
+        <input
+          matInput
+          [matDatepicker]="endDatePicker"
+          [min]="startDate"
+          [(ngModel)]="endDate"
+          (dateChange)="dateChange()"
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="endDatePicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #endDatePicker></mat-datepicker>
+      </mat-form-field>
+    </div>
 
     <!-- Display the selected chart based on the dropdown value -->
-    <ng-container *ngIf="selectedChartType === 'bar'">
+    <ng-container *ngIf="selectedChartType === 'bar' && !isLoading">
       <ngx-charts-bar-vertical
         [view]="view"
         [results]="chartData"
@@ -28,7 +65,7 @@
       ></ngx-charts-bar-vertical>
     </ng-container>
 
-    <ng-container *ngIf="selectedChartType === 'pie'">
+    <ng-container *ngIf="selectedChartType === 'pie' && !isLoading">
       <ngx-charts-pie-chart
         [view]="view"
         [results]="chartData"
@@ -38,7 +75,7 @@
       ></ngx-charts-pie-chart>
     </ng-container>
 
-    <ng-container *ngIf="selectedChartType === 'horizontalBar'">
+    <ng-container *ngIf="selectedChartType === 'horizontalBar' && !isLoading">
       <ngx-charts-bar-horizontal
         [view]="view"
         [results]="chartData"
@@ -58,7 +95,12 @@
   <!-- Lifetime Data -->
   <div class="line-chart-container">
     <h2>Life time Data</h2>
+    <div *ngIf="isLifetimeLoading" class="loading-spinner">
+      <mat-spinner diameter="30"></mat-spinner>
+      <span>Loading...</span>
+    </div>
     <ngx-charts-line-chart
+      *ngIf="!isLifetimeLoading"
       class="lineChart"
       [view]="view"
       [scheme]="colorScheme"

@@ -1,0 +1,43 @@
+<h2 mat-dialog-title>Select Start and End Date</h2>
+<mat-dialog-content>
+  <form [formGroup]="dateSelectForm">
+    <mat-form-field>
+      <label>Start Date</label>
+      <input
+        matInput
+        [matDatepicker]="startDatePicker"
+        [max]="dateSelectForm.get('endDate')!.value"
+        formControlName="startDate"
+      />
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="startDatePicker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #startDatePicker></mat-datepicker>
+    </mat-form-field>
+
+    <div class="arrow-icon">
+      <mat-icon>arrow_forward</mat-icon>
+    </div>
+
+    <mat-form-field>
+      <label>End Date</label>
+      <input
+        matInput
+        [matDatepicker]="endDatePicker"
+        [min]="dateSelectForm.get('startDate')!.value"
+        formControlName="endDate"
+      />
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="endDatePicker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #endDatePicker></mat-datepicker>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button (click)="save()">Confirm</button>
+  <button mat-button (click)="onCancelClick()">Cancel</button>
+</mat-dialog-actions>

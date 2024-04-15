@@ -35,7 +35,13 @@ export class AnalyticsComponent implements OnInit {
     group: ScaleType.Ordinal,
   };
   lineChartData: any[] = [];
+
+  startDate: Date;
+  endDate: Date;
+
   isLoggedIn = false;
+  isLoading = false;
+  isLifetimeLoading = false;
 
   gradient: boolean = true; // or any other appropriate value
   showXAxis: boolean = true;
@@ -52,6 +58,14 @@ export class AnalyticsComponent implements OnInit {
     private costService: CostServicesService,
     private localStorage: LocalStorageService
   ) {
+    const currentDate = new Date();
+    this.endDate = currentDate;
+    this.startDate = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth() - 1,
+      currentDate.getDate()
+    );
+
     this.localStorage.userCredentials$.subscribe((credentials) => {
       this.isLoggedIn = !!credentials; // Check if user credentials are present
     });
@@ -62,14 +76,48 @@ export class AnalyticsComponent implements OnInit {
     if (this.isLoggedIn) {
       this.id = this.localStorage.getUserId();
 
-      this.costService.getMonthCosts(this.id, 0).subscribe(
+      this.isLoading = true;
+      this.isLifetimeLoading = true;
+
+      const req = { startDate: this.startDate, endDate: this.endDate };
+
+      this.costService.getCostByRange(this.id, req).subscribe(
         (response) => {
+          this.isLoading = false;
+          this.isLifetimeLoading = false;
           const currentMonthData = response;
           this.chartData = this.processData(currentMonthData);
           // Call longTermData method here, inside the subscription callback
           this.updateLongTermData();
         },
         (error) => {
+          this.isLoading = false;
+          this.isLifetimeLoading = false;
+          console.error('Update User Error:', error);
+          // Handle error as needed
+        }
+      );
+    }
+  }
+
+  dateChange(): void {
+    if (this.isLoggedIn) {
+      this.id = this.localStorage.getUserId();
+
+      this.isLoading = true;
+
+      const req = { startDate: this.startDate, endDate: this.endDate };
+
+      this.costService.getCostByRange(this.id, req).subscribe(
+        (response) => {
+          this.isLoading = false;
+          const currentMonthData = response;
+          this.chartData = this.processData(currentMonthData);
+          // Call longTermData method here, inside the subscription callback
+          this.updateLongTermData();
+        },
+        (error) => {
+          this.isLoading = false;
           console.error('Update User Error:', error);
           // Handle error as needed
         }
@@ -95,14 +143,17 @@ export class AnalyticsComponent implements OnInit {
   updateChartType(): void {}
 
   updateLongTermData(): void {
+    this.isLifetimeLoading = true;
     this.longTermData().subscribe(
       (longTermData) => {
         // Assign the result to lineChartData when data is available
+        this.isLifetimeLoading = false;
         this.lineChartData = longTermData;
 
         // Now you can use this.lineChartData for rendering or any further processing
       },
       (error) => {
+        this.isLifetimeLoading = false;
         console.error('Error fetching long term data:', error);
       }
     );

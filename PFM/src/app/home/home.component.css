@@ -4,6 +4,7 @@
 }
 
 .right-side {
+  position: relative;
   width: 40%;
   padding: 20px;
   margin: 2%;
@@ -12,6 +13,14 @@
   border-radius: 2%;
   border: 2px solid #ccc;
   background-color: rgba(0, 0, 0, 0.229);
+}
+
+.mat-icon {
+  position: absolute; /* Set position to absolute */
+  top: 0; /* Position the icon at the top */
+  right: 0; /* Position the icon at the right */
+  margin: 10px; /* Adjust margin as needed */
+  cursor: pointer;
 }
 
 .left-side {

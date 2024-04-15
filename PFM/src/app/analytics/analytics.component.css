@@ -5,6 +5,16 @@
   justify-content: space-between;
 }
 
+.date-selector {
+  margin-top: 10px;
+  display: flex;
+  margin-left: 5%;
+}
+
+mat-form-field {
+  padding-right: 5%;
+}
+
 /* Add styling for the charts container */
 .charts-container {
   width: 48%; /* Adjust width as needed for the web view */

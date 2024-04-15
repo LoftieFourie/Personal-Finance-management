@@ -11,7 +11,10 @@ router
 
 router
   .route("/month/:id/:index")
-  .get(verifyToken, costControllers.getMonthCosts);
+  .get(verifyToken, costControllers.getMonthCosts)
+  .post(verifyToken, costControllers.getCostByRange);
+
+router.route("/range/:id").post(verifyToken, costControllers.getCostByRange);
 
 router
   .route("/:id/:costId")

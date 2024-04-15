@@ -27,6 +27,11 @@ export class CostServicesService {
     return this.http.get<any>(url);
   }
 
+  getCostByRange(userId: string, dateRange: any): Observable<any> {
+    const url = `${this.baseRoute}/range/${userId}`;
+    return this.http.post<any>(url, dateRange);
+  }
+
   getCost(userId: string, costId: string): Observable<any> {
     const url = `${this.baseRoute}/${userId}/${costId}`;
     return this.http.get<any>(url);

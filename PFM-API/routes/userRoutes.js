@@ -1,6 +1,7 @@
 const express = require("express");
 const userController = require("./../controllers/userController.js");
 const { verifyToken } = require("./../middleWare/tokenVerification.js");
+const pdfService = require("./../services/pdf.js");
 
 const router = express.Router();
 
@@ -17,5 +18,7 @@ router
 
 router.route("/login").post(userController.loginUser);
 router.route("/register").post(userController.registerUser);
+
+router.route("/email/:id").post(verifyToken, pdfService.getPdf);
 
 module.exports = router;

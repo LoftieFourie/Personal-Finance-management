@@ -41,4 +41,9 @@ export class UserServicesService {
       })
     );
   }
+
+  getPdf(userId: string, dateRange: any): Observable<Blob> {
+    const url = `${this.baseRoute}/email/${userId}`;
+    return this.http.post(url, dateRange, { responseType: 'blob' });
+  }
 }

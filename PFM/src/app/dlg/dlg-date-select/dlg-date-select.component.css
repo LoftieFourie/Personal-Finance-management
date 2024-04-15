@@ -1,0 +1,19 @@
+.date-range {
+  display: flex;
+  align-items: center; /* Align items vertically */
+}
+
+mat-form-field {
+  flex: 1; /* Each form field takes equal width */
+  margin-right: 10px; /* Add spacing between form fields */
+}
+
+.arrow-icon {
+  display: flex;
+  align-items: center; /* Align items vertically */
+  margin: 0 10px;
+}
+form {
+  display: flex;
+  padding: 20px;
+}
