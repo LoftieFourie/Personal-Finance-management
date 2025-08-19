@@ -17,6 +17,10 @@ router
 router.route("/range/:id").post(verifyToken, costControllers.getCostByRange);
 
 router
+  .route("/chart/:id")
+  .post(verifyToken, costControllers.getCostByRangeAndCategory);
+
+router
   .route("/:id/:costId")
   .get(verifyToken, costControllers.getCost)
   .delete(verifyToken, costControllers.deleteCost)

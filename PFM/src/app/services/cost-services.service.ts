@@ -50,4 +50,9 @@ export class CostServicesService {
     const url = `${this.baseRoute}/${userId}/${costId}`;
     return this.http.delete<any>(url);
   }
+
+  getChartCostByCategory(userId: string, payload: any): Observable<any> {
+    const url = `${this.baseRoute}/chart/${userId}`;
+    return this.http.post<any>(url, payload);
+  }
 }

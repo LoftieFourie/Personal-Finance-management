@@ -4,6 +4,9 @@ import { LocalStorageService } from '../services/local-storage.service';
 import { Color, ScaleType } from '@swimlane/ngx-charts';
 import { Observable, of } from 'rxjs';
 import { catchError, concatAll, concatMap, map } from 'rxjs/operators';
+import { MatDialog } from '@angular/material/dialog';
+import { DlgDateSelectComponent } from '../dlg/dlg-date-select/dlg-date-select.component';
+import { DlgChartDataViewComponent } from '../dlg/dlg-chart-data-view/dlg-chart-data-view.component';
 
 interface Cost {
   _id: string | null;
@@ -56,7 +59,8 @@ export class AnalyticsComponent implements OnInit {
 
   constructor(
     private costService: CostServicesService,
-    private localStorage: LocalStorageService
+    private localStorage: LocalStorageService,
+    private dlg: MatDialog
   ) {
     const currentDate = new Date();
     this.endDate = currentDate;
@@ -83,6 +87,7 @@ export class AnalyticsComponent implements OnInit {
 
       this.costService.getCostByRange(this.id, req).subscribe(
         (response) => {
+          console.log(response);
           this.isLoading = false;
           this.isLifetimeLoading = false;
           const currentMonthData = response;
@@ -276,5 +281,48 @@ export class AnalyticsComponent implements OnInit {
     }
 
     return { name: monthName, series };
+  }
+
+  onChartSelect(event: any): void {
+    // Extract the selected category from the event
+    if (typeof event === 'string') {
+      this.onLegendLabelClick(event);
+    } else {
+      const selectedCategory = event.name;
+
+      const req = {
+        startDate: this.startDate,
+        endDate: this.endDate,
+        category: selectedCategory,
+      };
+
+      this.costService
+        .getChartCostByCategory(this.id, req)
+        .subscribe((response) => {
+          console.log(response);
+          let dialogRef = this.dlg.open(DlgChartDataViewComponent, {
+            data: { category: selectedCategory, costs: response },
+            panelClass: 'custom-dialog',
+          });
+
+          dialogRef.afterClosed().subscribe((result) => {
+            console.log('The dialog was closed');
+          });
+        });
+
+      // Retrieve costs for the selected category
+      const costsForCategory = this.chartData.filter(
+        (item) => item.name === selectedCategory
+      );
+    }
+  }
+
+  onLegendLabelClick(event: any): void {
+    const selectedCategory = event;
+
+    // Filter out the selected category from the chart data
+    this.chartData = this.chartData.filter(
+      (item) => item.name !== selectedCategory
+    );
   }
 }

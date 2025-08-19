@@ -62,6 +62,7 @@
         [xAxisLabel]="xAxisLabel"
         [yAxisLabel]="yAxisLabel"
         [animations]="animations"
+        (select)="onChartSelect($event)"
       ></ngx-charts-bar-vertical>
     </ng-container>
 
@@ -72,6 +73,7 @@
         [scheme]="colorScheme"
         [legend]="showLegend"
         [animations]="animations"
+        (select)="onChartSelect($event)"
       ></ngx-charts-pie-chart>
     </ng-container>
 
@@ -88,6 +90,7 @@
         [xAxisLabel]="xAxisLabel"
         [yAxisLabel]="yAxisLabel"
         [animations]="animations"
+        (select)="onChartSelect($event)"
       ></ngx-charts-bar-horizontal>
     </ng-container>
   </div>

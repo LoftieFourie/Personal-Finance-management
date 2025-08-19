@@ -1,0 +1,24 @@
+<h1 mat-dialog-title>{{ data.category }} Costs</h1>
+<div mat-dialog-content>
+  <table class="cost-table">
+    <thead>
+      <tr>
+        <th>Amount</th>
+        <th>Category</th>
+        <th>Date</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let cost of data.costs">
+        <td>{{ cost.amount | currency : "R" : "symbol" : "1.2-2" }}</td>
+        <td>{{ cost.name }}</td>
+        <td>{{ cost.date | date }}</td>
+        <td>{{ cost.description }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCloseClick()">Close</button>
+</div>

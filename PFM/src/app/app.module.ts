@@ -30,6 +30,7 @@ import { MatCardModule } from '@angular/material/card';
 import { DlgSchemaEditComponent } from './dlg/dlg-schema-edit/dlg-schema-edit.component';
 import { DlgDateSelectComponent } from './dlg/dlg-date-select/dlg-date-select.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { DlgChartDataViewComponent } from './dlg/dlg-chart-data-view/dlg-chart-data-view.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     DlgFixedCostsComponent,
     DlgSchemaEditComponent,
     DlgDateSelectComponent,
+    DlgChartDataViewComponent,
   ],
   imports: [
     BrowserModule,

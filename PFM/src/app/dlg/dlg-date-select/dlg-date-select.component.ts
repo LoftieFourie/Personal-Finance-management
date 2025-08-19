@@ -6,7 +6,7 @@ import {
   Validators,
 } from '@angular/forms'; // Import FormBuilder and Validators
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { LocalStorageService } from 'src/app/services/local-storage.service';
+import { LocalStorageService } from '../../services/local-storage.service';
 
 @Component({
   selector: 'app-dlg-date-select',
@@ -54,9 +54,7 @@ export class DlgDateSelectComponent {
     });
   }
 
-  ngOnDestroy(): void {
-    this.onCancelClick();
-  }
+  ngOnDestroy(): void {}
 
   onCancelClick(): void {
     this.dialogRef.close({ action: 'cancel' });

@@ -4,8 +4,7 @@
   "description": "api for the personal finance management application",
   "main": "app.js",
   "scripts": {
-    "test": "nodemon server.js",
-    "start": "node server.js"
+    "start": "nodemon server.js"
   },
   "author": "Loftie Fourie",
   "license": "ISC",

@@ -93,6 +93,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
   retrieveAndStoreOriginalMonthlyCosts() {
     this.loading = true;
     const req = { startDate: this.startDate, endDate: this.endDate };
+    console.log(req);
     this.costService
       .getCostByRange(this.id, req)
       .subscribe(
@@ -117,17 +118,22 @@ export class HomeComponent implements AfterViewInit, OnInit {
       .createNewCost(this.id, this.newCost)
       .subscribe(
         (response) => {
-          // Clone the object to avoid pushing the reference
-          this.localStorage.addMonthlyCost({ ...response });
+          if (response && response.status === 0) {
+            // Clone the object to avoid pushing the reference
+            this.localStorage.addMonthlyCost({ ...response.result });
 
-          // Clear the input fields after adding the cost
-          this.newCost = {
-            _id: null,
-            amount: null,
-            category: '',
-            description: '',
-          };
-          this.setFocusOnAmountInput();
+            // Clear the input fields after adding the cost
+            this.newCost = {
+              _id: null,
+              amount: null,
+              category: '',
+              description: '',
+            };
+            this.setFocusOnAmountInput();
+          } else {
+            // Handle other status codes if needed
+            console.error('Unexpected response status:', response.status);
+          }
         },
         (error) => {
           // Handle error appropriately

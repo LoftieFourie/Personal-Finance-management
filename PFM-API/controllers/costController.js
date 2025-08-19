@@ -26,13 +26,20 @@ exports.createNewCost = async (req, res) => {
   const userId = req.params.id;
 
   try {
+    // Check if the user exists
     const user = await User.findById(userId);
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
+
+    const initialVal = user.references.costs.length;
+    console.log("Initial costs length:", initialVal);
+
+    // Extract cost data from the request body
     const { description, amount, category } = req.body;
 
+    // Create a new Cost document with the user ID
     const newCost = new Cost({
       user_id: userId,
       description,
@@ -40,18 +47,27 @@ exports.createNewCost = async (req, res) => {
       category,
     });
 
-    // Add the reference to the new cost in the user's references.costs array
-    user.references.costs.push(newCost._id);
-
-    // Save the user first to ensure the reference is added
-    await user.save();
-
-    // Save the new cost document
+    // Save the new Cost document
     const savedCost = await newCost.save();
 
-    res.status(201).json(savedCost);
+    // Add the reference to the new cost in the user's references.costs array
+    user.references.costs.push(savedCost._id);
+
+    // Save the user with the updated references
+    await user.save();
+
+    const finalVal = user.references.costs.length;
+    console.log("Final costs length:", finalVal);
+
+    if (finalVal > initialVal) {
+      res.status(201).json({ status: 0, result: savedCost });
+    } else {
+      return res
+        .status(500)
+        .json({ status: 1, message: "Cost not added successfully" });
+    }
   } catch (error) {
-    console.error(error);
+    console.error("Error creating new cost:", error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
@@ -89,10 +105,10 @@ exports.getCostByRange = async (req, res) => {
   const startDate = req.body.startDate;
   const endDate = req.body.endDate;
 
-  console.log(startDate);
-
   try {
     const user = await User.findById(userId).populate("references.costs");
+
+    console.log(user.references.costs);
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -180,6 +196,33 @@ exports.deleteCost = async (req, res) => {
 
     await user.save();
     res.status(204).json(); // No content on successful deletion
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+exports.getCostByRangeAndCategory = async (req, res) => {
+  const userId = req.params.id;
+  const startDate = req.body.startDate;
+  const endDate = req.body.endDate;
+  const category = req.body.category;
+
+  try {
+    const user = await User.findById(userId).populate("references.costs");
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const costsInRangeAndCategory = user.references.costs.filter((cost) => {
+      return (
+        moment(cost.date).isBetween(startDate, endDate, null, "[]") &&
+        cost.category === category
+      );
+    });
+
+    res.status(200).json(costsInRangeAndCategory);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error" });
